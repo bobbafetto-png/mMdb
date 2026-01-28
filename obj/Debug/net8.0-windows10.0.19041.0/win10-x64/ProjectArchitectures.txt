@@ -1,0 +1,1 @@
+C:\Users\permy\source\repos\mMdb\mMdb\mMdb.csproj;x64
