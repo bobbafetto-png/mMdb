@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 using mMdb.Models;
 using mMdb.Services;
+using Microsoft.Extensions.Options;
 
 namespace mMdb.ViewModels
 {
@@ -19,9 +20,8 @@ namespace mMdb.ViewModels
         // UI-lista (flattenad vy av biblioteket)
         public ObservableCollection<LibraryListItem> Films { get; } = new();
 
-        // OMDb-klient
-        private readonly OmdbClient _omdb =
-            new(new HttpClient(), "ad1fdad7");
+        // OMDb-klient (via config)
+        private readonly OmdbClient _omdb;
 
         // Bibliotek (robust struktur)
         private LibraryFile _library = new();
@@ -61,8 +61,15 @@ namespace mMdb.ViewModels
         // Debounced save
         private CancellationTokenSource? _saveCts;
 
-        public MainViewModel()
+        public MainViewModel(IOptions<OmdbOptions> omdbOptions)
         {
+            var apiKey = omdbOptions.Value.ApiKey;
+
+            if (string.IsNullOrWhiteSpace(apiKey))
+                throw new InvalidOperationException("OMDb ApiKey saknas. Kontrollera appsettings.json");
+
+            _omdb = new OmdbClient(new HttpClient(), apiKey);
+
             _ = InitializeAsync();
         }
 

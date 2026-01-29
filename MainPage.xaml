@@ -8,11 +8,7 @@
     x:DataType="vm:MainViewModel"
     Title="mMdb">
 
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
-
-    <Grid RowDefinitions="Auto,*"
+        <Grid RowDefinitions="Auto,*"
           ColumnDefinitions="320,*"
           Padding="16"
           RowSpacing="12"

@@ -1,12 +1,10 @@
-﻿namespace mMdb
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿namespace mMdb;
 
-            MainPage = new AppShell();
-        }
+public partial class App : Application
+{
+    public App(MainPage mainPage)
+    {
+        InitializeComponent();
+        MainPage = mainPage;
     }
 }
